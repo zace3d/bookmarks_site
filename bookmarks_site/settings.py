@@ -11,19 +11,28 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import environ
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
+# reading .env file
+environ.Env.read_env()
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '6$0=cfb&+b&3bv!&puaa20k3h#crv2jmmu$nojs4d)^^n41ni7'
+# SECRET_KEY = '6$0=cfb&+b&3bv!&puaa20k3h#crv2jmmu$nojs4d)^^n41ni7'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -78,11 +87,11 @@ WSGI_APPLICATION = 'bookmarks_site.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'bookmarks_development',
-        'USER': 'factico',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '',
+        'NAME': env('DB_BOOKMARKS_DATABASE'),
+        'USER': env('DB_BOOKMARKS_USER'),
+        'PASSWORD': env('DB_BOOKMARKS_PASSWORD'),
+        'HOST': env('DB_BOOKMARKS_HOST'),
+        'PORT': env('DB_BOOKMARKS_PORT'),
     }
 }
 
