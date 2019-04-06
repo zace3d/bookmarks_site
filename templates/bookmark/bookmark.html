@@ -1,0 +1,21 @@
+<a class="lead" href="{{ bookmark.url }}" target="_blank">{{ bookmark.title }}</a>
+{% if bookmark.description %}
+  <br>{{ bookmark.description|linebreaksbr }}
+{% endif %}
+{% if not bookmark.is_public %}
+  <br><span class="badge badge-warning">private</span>&nbsp;
+{% else %}
+  <br>
+{% endif %}
+{% if bookmark.tags.count %}
+  {% for tag in bookmark.tags.all %}
+    <span class="badge badge-primary">{{ tag|lower }}</span>&nbsp;
+  {% endfor %}
+{% endif %}
+<br>by <a href="{% url 'bookmark_user' bookmark.owner.username %}">
+    {{ bookmark.owner.username }}</a>
+{{ bookmark.date_created|timesince }} ago
+{% if bookmark.owner == user or user.is_superuser %}
+  <br><a class="btn btn-sm btn-outline-success my-2 my-xs-0" role="button"
+      href="{% url "bookmark_edit" bookmark.pk %}">Edit bookmark</a>
+{% endif %}

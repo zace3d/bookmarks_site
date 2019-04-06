@@ -1,0 +1,25 @@
+{% if user.is_authenticated %}
+<ul class="navbar-nav ml-auto">
+	<a class="nav-link active" href="{% url "bookmark_create" %}">Create bookmark</a>
+	<li class="nav-link dropdown">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+			aria-expanded="false">{{ user.username }} <span class="caret"></span></a>
+		<ul class="dropdown-menu" aria-labelledby="navbarDropdown" role="menu">
+			<a class="dropdown-item" href="{% url "bookmark_user" user.username %}">My bookmarks</a>
+			<a class="dropdown-item" href="{% url "logout" %}">Logout</a>
+		</ul>
+	</li>
+</ul>
+{% else %}
+<form class="navbar-nav ml-auto" action="{% url "login" %}"
+	method="post" accept-charset="utf-8">
+	<div class="form-inline my-2 my-lg-0">
+		<input type="text" placeholder="Username" class="form-control mr-sm-2" name="username">
+	</div>
+	<div class="form-inline my-2 my-lg-0">
+		<input type="password" placeholder="Password" class="form-control mr-sm-2" name="password">
+	</div>
+	{% csrf_token %}
+	<button type="submit" class="btn btn-outline-success my-2 my-sm-0">Sign in</button>
+</form>
+{% endif %}

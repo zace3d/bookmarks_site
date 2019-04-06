@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  {% if create %}Create{% else %}Edit{% endif %} bookmark
+{% endblock %}
+
+{% block heading %}
+  <h2 class="mb-5">
+    {% if create %}
+      Create bookmark
+    {% else %}
+      Edit bookmark
+    {% endif %}
+  </h2>
+{% endblock %}
+
+{% block content %}
+  {% if create %}
+    {% url "bookmark_create" as action_url %}
+  {% else %}
+    {% url "bookmark_edit" pk=form.instance.pk as action_url %}
+  {% endif %}
+  <form action="{{ action_url }}" method="post" accept-charset="utf-8">
+    {{ form|crispy }}
+    {% csrf_token %}
+    <p><input type="submit" class="btn btn-outline-success my-2 my-sm-0" value="Save"></p>
+  </form>
+{% endblock %}

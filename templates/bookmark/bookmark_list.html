@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Latest bookmarks{% endblock %}
+
+{% block heading %}
+  <h2 class="mb-5">Latest bookmarks</h2>
+{% endblock %}
+
+{% block content %}
+  <ul class="list-group">
+  {% for bookmark in bookmarks %}
+    <li class="list-group-item">{% include "bookmark/bookmark.html" %}</li>
+  {% empty %}
+    <li class="list-group-item text-center">No bookmarks.</li>
+  {% endfor %}
+  </ul>
+{% endblock %}

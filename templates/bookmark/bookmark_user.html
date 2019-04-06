@@ -1,0 +1,14 @@
+{% extends "bookmark/bookmark_list.html" %}
+{% load cloud_tags %}
+
+{% block title %}{{ owner.username }}'s bookmarks{% endblock %}
+
+{% block heading %}
+  <h2 class="mb-5">{{ owner.username }}'s bookmarks<br>
+    <small>{{ bookmarks.count }} bookmarks in total</small>
+  </h2>
+{% endblock %}
+
+{% block sidebar %}
+  {% tagcloud owner %}
+{% endblock %}
