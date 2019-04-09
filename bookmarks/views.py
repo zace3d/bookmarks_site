@@ -3,8 +3,11 @@ from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, redirect, render
 
+from rest_framework import generics
+
 from .forms import BookmarkForm
 from .models import Bookmark
+from .serializers import BookmarkSerializer
 
 # Create your views here.
 
@@ -57,3 +60,11 @@ def bookmark_edit(request, pk):
         form = BookmarkForm(instance=bookmark)
     context = {'form': form, 'create': False}
     return render(request, 'bookmark/form.html', context)
+
+
+class ListBookmarksView(generics.ListAPIView):
+    """
+    Provides a get method handler.
+    """
+    queryset = Bookmark.objects.all()
+    serializer_class = BookmarkSerializer
